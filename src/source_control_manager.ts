@@ -257,17 +257,17 @@ export class SourceControlManager implements IDisposable {
           )
       ) as IOpenRepository[];
 
-    possibleRepositoryFolders.forEach(p =>{
+    possibleRepositoryFolders.forEach(p => {
       if (this.scanRepositories.length > 0) {
         for (const reposPath of this.scanRepositories) {
           const splitPath = reposPath.split(/\/|\\/);
-          console.log(`onDidChangeWorkspaceFolders reposPath:${ reposPath }`);
+          console.log(`onDidChangeWorkspaceFolders reposPath:${reposPath}`);
           this.tryOpenRepository(p.uri.fsPath + "/" + splitPath.join("/"));
         }
       } else {
-        this.tryOpenRepository(p.uri.fsPath)
-      }}
-    );
+        this.tryOpenRepository(p.uri.fsPath);
+      }
+    });
     openRepositoriesToDispose.forEach(r => r.repository.dispose());
   }
 
@@ -277,7 +277,7 @@ export class SourceControlManager implements IDisposable {
       if (this.scanRepositories.length > 0) {
         for (const reposPath of this.scanRepositories) {
           const splitPath = reposPath.split(/\/|\\/);
-          console.log(`scanWorkspaceFolders reposPath:${ reposPath }`);
+          console.log(`scanWorkspaceFolders reposPath:${reposPath}`);
           await this.tryOpenRepository(root + "/" + splitPath.join("/"));
         }
       } else {
