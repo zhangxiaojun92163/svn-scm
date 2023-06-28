@@ -534,9 +534,10 @@ export class Repository implements IRemoteRepository {
         continue;
       }
 
-      if (matchAll(status.path, excludeList, { dot: true })) {
-        continue;
-      }
+      // not use files.exclude. change by zxj
+      // if (matchAll(status.path, excludeList, { dot: true })) {
+      //   continue;
+      // }
 
       const uri = Uri.file(path.join(this.workspaceRoot, status.path));
       const renameUri = status.rename

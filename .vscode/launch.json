@@ -8,12 +8,14 @@
       "request": "launch",
       "runtimeExecutable": "${execPath}",
       "args": [
+        "--folder-uri=file:///f:/repos/test/testsvn",
         "--disable-extensions",
         "--extensionDevelopmentPath=${workspaceRoot}"
       ],
       "stopOnEntry": false,
       "sourceMaps": true,
       "outFiles": ["${workspaceRoot}/out/**/*.js"],
+      "preLaunchTask": "build"
     },
     {
       "name": "Launch Tests",

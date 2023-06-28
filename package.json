@@ -1,22 +1,22 @@
 {
-    "name": "svn-scm",
-    "displayName": "SVN",
+    "name": "custom-svn-scm",
+    "displayName": "CSVN",
     "description": "Integrated Subversion source control",
-    "version": "2.17.0",
-    "publisher": "johnstoncode",
+    "version": "1.0.0",
+    "publisher": "zhangxiaojun",
     "engines": {
         "vscode": "^1.53.0"
     },
     "private": true,
     "enableProposedApi": false,
     "icon": "images/subversion.png",
-    "homepage": "https://github.com/JohnstonCode/svn-scm/blob/master/README.md",
+    "homepage": "https://github.com/zhangxiaojun92163/svn-scm/blob/master/README.md",
     "repository": {
         "type": "git",
-        "url": "https://github.com/JohnstonCode/svn-scm.git"
+        "url": "https://github.com/zhangxiaojun92163/svn-scm.git"
     },
     "bugs": {
-        "url": "https://github.com/JohnstonCode/svn-scm/issues"
+        "url": "https://github.com/zhangxiaojun92163/svn-scm/issues"
     },
     "categories": [
         "Other",
@@ -1205,6 +1205,12 @@
                     "type": "number",
                     "description": "Set the interval in seconds to check changed files on remote repository and show in statusbar. 0 to disable",
                     "default": 300
+                },
+                "svn.scanRepositories": {
+                    "type": "array",
+                    "description": "Folders to scan. Relative path, separator is /",
+                    "default": [
+                    ]
                 },
                 "svn.showOutput": {
                     "type": "boolean",

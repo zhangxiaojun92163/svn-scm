@@ -61,6 +61,7 @@ export class SourceControlManager implements IDisposable {
   private possibleSvnRepositoryPaths = new Set<string>();
   private ignoreList: string[] = [];
   private maxDepth: number = 0;
+  private scanRepositories: string[] = [];
 
   private configurationChangeDisposable: Disposable;
 
@@ -155,6 +156,7 @@ export class SourceControlManager implements IDisposable {
 
       this.ignoreList = configuration.get("multipleFolders.ignore", []);
     }
+    this.scanRepositories = configuration.get("scanRepositories", []);
 
     workspace.onDidChangeWorkspaceFolders(
       this.onDidChangeWorkspaceFolders,
@@ -255,8 +257,16 @@ export class SourceControlManager implements IDisposable {
           )
       ) as IOpenRepository[];
 
-    possibleRepositoryFolders.forEach(p =>
-      this.tryOpenRepository(p.uri.fsPath)
+    possibleRepositoryFolders.forEach(p =>{
+      if (this.scanRepositories.length > 0) {
+        for (const reposPath of this.scanRepositories) {
+          const splitPath = reposPath.split(/\/|\\/);
+          console.log(`onDidChangeWorkspaceFolders reposPath:${ reposPath }`);
+          this.tryOpenRepository(p.uri.fsPath + "/" + splitPath.join("/"));
+        }
+      } else {
+        this.tryOpenRepository(p.uri.fsPath)
+      }}
     );
     openRepositoriesToDispose.forEach(r => r.repository.dispose());
   }
@@ -264,7 +274,15 @@ export class SourceControlManager implements IDisposable {
   private async scanWorkspaceFolders() {
     for (const folder of workspace.workspaceFolders || []) {
       const root = folder.uri.fsPath;
-      await this.tryOpenRepository(root);
+      if (this.scanRepositories.length > 0) {
+        for (const reposPath of this.scanRepositories) {
+          const splitPath = reposPath.split(/\/|\\/);
+          console.log(`scanWorkspaceFolders reposPath:${ reposPath }`);
+          await this.tryOpenRepository(root + "/" + splitPath.join("/"));
+        }
+      } else {
+        await this.tryOpenRepository(root);
+      }
     }
   }
 
